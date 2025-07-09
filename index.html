@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Info: Font Awesome Cdn -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <!-- Info: Select Box -->
+    <div class="select-bx">
+      <header>Tic Tac Toe</header>
+      <div class="content">
+        <div class="title">Select which you want to be?</div>
+        <div class="options">
+          <button class="playerX">Player (X)</button>
+          <button class="playerO">Player (O)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info: Play-Board Section -->
+     <div class="play-board">
+        <div class="details">
+            <div class="players">
+                <span class="Xturn">X's Turn</span>
+                <span class="Oturn">O's Turn</span>
+            </div>
+        </div>
+        <div class="play-area">
+            <section>
+                <span class="box1"></span>
+                <span class="box2"></span>
+                <span class="box3"></span>
+            </section>
+            <section>
+                <span class="box4"></span>
+                <span class="box5"></span>
+                <span class="box6"></span>
+            </section>
+            <section>
+                <span class="box7"></span>
+                <span class="box8"></span>
+                <span class="box9"></span>
+            </section>
+        </div>
+     </div>
+
+     <!-- Info: Result Section -->
+      <div class="result-bx">
+        <div class="result-txt"></div>
+        <div class="btn">
+            <button>Replay</button>
+          </div>
+        </div>
+
+  </body>
+  <script src="main.js"></script>
+</html>
