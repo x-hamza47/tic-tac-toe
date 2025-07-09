@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+:root{
+    --main-color:rgb(252, 131, 151);
+    --accent-color:#fff;
+}
+
+*{
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background: linear-gradient(10deg, blueviolet,pink) no-repeat;
+    height: 100dvh;
+}
+.play-board,.select-bx,.result-bx{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    transition: all .3s ease;
+}
+.select-bx{
+    padding: 20px 25px 25px;
+    background: var(--accent-color);
+    border-radius: 5px;
+    max-width: 330px;
+    width: 100%;
+
+    & header{
+        font-size: 23px;
+        font-weight: 600;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .options{
+        width: 100%;
+        display: flex;
+        column-gap: 5px;
+
+        & button{
+            font-size: 18px;
+            font-weight: 500;
+            width: 100%;
+            padding: 8px 0;
+            border: none;
+            outline: none;
+            background: rgb(252, 131, 151);
+            border-radius: 5px;
+            color: var(--accent-color);
+            cursor: pointer;
+            transition: all .3s ease;
+        }
+    }
+}
+.select-bx.hide{
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%,-50%) scale(.9);
+}
+.select-bx .options button:hover,
+.result-bx .btn:hover{
+        transform: scale(.96);
+}
+
+.select-bx .title{
+    font-size: 18px;
+    font-weight: 500;
+    margin: 20px 0;
+}
+
+/*-------- Play Board ----------*/
+.play-board{
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%,-50%) scale(.9);
+}
+/* Showing PlayBoard */
+.play-board.show{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%,-50%) scale(1);
+}
+.play-area{
+    margin-top: 20px;
+}
+.play-board .details{
+    background: var(--accent-color);
+    padding: 7px;
+    border-radius: 5px;
+}
+.play-board .details .players{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+
+    &::before{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #008000;
+        width: 50%;
+        height: 100%;
+        border-radius: 5px;
+        background: var(--main-color);
+        z-index: 1;
+        transition: all .3s ease;
+    }
+}
+.play-board .details span{
+    color: var(--main-color);
+    width: 100%;
+    border-radius: 5px;
+    padding: 7px 0;
+    font-size: 19px;
+    font-weight: 500;
+    cursor: default;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    transition: all .3s ease;
+}
+.play-board .details span:first-child{
+    color: var(--accent-color);
+}
+/* Active Players */
+.players.active span:first-child{
+    color: var(--main-color);
+}
+.players.active span:nth-child(2){
+    color: var(--accent-color);
+}
+.play-board .details .players.active::before{
+    left: 50%;
+}
+.play-board section{
+    display: flex;
+}
+.play-board section span{
+    display: block;
+    height: 80px;
+    width: 80px;
+    margin: 3px;
+    background: var(--accent-color);
+    border-radius: 5px;
+    font-size: 40px;
+    line-height: 80px;
+    text-align: center;
+    color: var(--main-color);
+}
+
+/* Result Box */
+.result-bx{
+    background: var(--accent-color);
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 350px;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%,-50%) scale(.9);
+}
+
+.result-bx.show{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%,-50%) scale(1);
+}
+.result-bx .result-txt{
+    font-size: 25px;
+    font-weight: 500;
+    /* display: flex; */
+    /* justify-content: center; */
+    text-align: center;
+
+    & strong{
+        font-weight: 600;
+        margin: 0 3px;
+    }
+}
+
+.result-bx .btn{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    & button{
+        font-size: 18px;
+        font-weight: 500;
+        padding: 8px 20px;
+        border: none;
+        outline: none;
+        background: rgb(252, 131, 151);
+        border-radius: 5px;
+        color: var(--accent-color);
+        cursor: pointer;
+        transition: all .3s ease;
+    }
+}
