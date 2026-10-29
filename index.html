@@ -1,74 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tic Tac Toe</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-    <link rel="manifest" href="favicon/site.webmanifest">
-    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-    <!-- Info: Font Awesome Cdn -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <!-- Info: Select Box -->
-    <div class="select-bx">
-      <header>Tic Tac Toe</header>
-      <div class="content">
-        <div class="title">Select which you want to be?</div>
-        <div class="options">
-          <button class="playerX">Player (X)</button>
-          <button class="playerO">Player (O)</button>
-        </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Tic Tac Toe Online: Play Free vs Computer | Hamza Aamir</title>
+  <meta name="description"
+    content="Play Tic Tac Toe online for free against the computer. Choose Easy, Medium or Hard difficulty, pick X or O, and play instantly in your browser. No signup needed." />
+  <meta name="keywords"
+    content="tic tac toe, tic tac toe online, play tic tac toe, tic tac toe vs computer, tic tac toe unbeatable ai, free browser game" />
+  <meta name="author" content="Hamza Aamir" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://tic-tac-toe-three-mu-94.vercel.app/" />
+  <meta name="theme-color" content="#8a2be2" />
+  <meta property="og:locale" content="en_US" />
+
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png" />
+  <link rel="manifest" href="./favicon/site.webmanifest" />
+  <link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5" />
+  <meta name="apple-mobile-web-app-title" content="Tic Tac Toe" />
+  <meta name="msapplication-TileColor" content="#da532c" />
+  <meta name="msapplication-config" content="./favicon/browserconfig.xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Hamza Aamir" />
+  <meta property="og:title" content="Tic Tac Toe Online: Play Free vs Computer" />
+  <meta property="og:description"
+    content="Play Tic Tac Toe against the computer with Easy, Medium and Hard modes. Free, fast and works on any device." />
+  <meta property="og:url" content="https://tic-tac-toe-three-mu-94.vercel.app/" />
+  <meta property="og:image" content="https://tic-tac-toe-three-mu-94.vercel.app/og-image.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Tic Tac Toe game preview with difficulty selection" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tic Tac Toe Online: Play Free vs Computer" />
+  <meta name="twitter:description" content="Play Tic Tac Toe vs the computer. Easy, Medium and Hard modes." />
+  <meta name="twitter:image" content="https://tic-tac-toe-three-mu-94.vercel.app/og-image.jpg" />
+  <meta name="twitter:image:alt" content="Tic Tac Toe game preview" />
+
+  <!-- Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://tic-tac-toe-three-mu-94.vercel.app/#website",
+          "url": "https://tic-tac-toe-three-mu-94.vercel.app/",
+          "name": "Tic Tac Toe by Hamza Aamir",
+          "inLanguage": "en",
+          "publisher": { "@id": "https://hamzaamir-portfolio.web.app/#person" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://hamzaamir-portfolio.web.app/#person",
+          "name": "Hamza Aamir",
+          "url": "https://hamzaamir-portfolio.web.app/",
+          "jobTitle": "Software Engineer",
+          "sameAs": [
+            "https://github.com/x-hamza47",
+            "https://www.linkedin.com/in/hamza-aamir-dev/"
+          ]
+        },
+        {
+          "@type": ["WebApplication", "VideoGame"],
+          "@id": "https://tic-tac-toe-three-mu-94.vercel.app/#game",
+          "name": "Tic Tac Toe Online",
+          "url": "https://tic-tac-toe-three-mu-94.vercel.app/",
+          "description": "A free browser-based Tic Tac Toe game against the computer with Easy, Medium and Hard difficulty levels.",
+          "applicationCategory": "GameApplication",
+          "genre": "Puzzle",
+          "operatingSystem": "Any (web browser)",
+          "browserRequirements": "Requires JavaScript",
+          "inLanguage": "en",
+          "image": "https://tic-tac-toe-three-mu-94.vercel.app/og-image.jpg",
+          "playMode": "SinglePlayer",
+          "isAccessibleForFree": true,
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+          "author": { "@id": "https://hamzaamir-portfolio.web.app/#person" },
+          "isPartOf": { "@id": "https://tic-tac-toe-three-mu-94.vercel.app/#website" },
+          "codeRepository": "https://github.com/x-hamza47"
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body>
+  <!-- Select Box -->
+  <main class="select-bx">
+    <header>
+      <h1>Tic Tac Toe</h1>
+    </header>
+    <div class="content">
+      <h2 class="title">Select difficulty</h2>
+      <div class="difficulty" role="group" aria-label="Difficulty">
+        <button type="button" data-level="easy">Easy</button>
+        <button type="button" data-level="medium" class="selected">Medium</button>
+        <button type="button" data-level="hard">Hard</button>
+      </div>
+
+      <h2 class="title">Select which you want to be?</h2>
+      <div class="options">
+        <button type="button" class="playerX">Player (X)</button>
+        <button type="button" class="playerO">Player (O)</button>
       </div>
     </div>
+  </main>
 
-    <!-- Info: Play-Board Section -->
-     <div class="play-board">
-        <div class="details">
-            <div class="players">
-                <span class="Xturn">X's Turn</span>
-                <span class="Oturn">O's Turn</span>
-            </div>
-        </div>
-        <div class="play-area">
-            <section>
-                <span class="box1"></span>
-                <span class="box2"></span>
-                <span class="box3"></span>
-            </section>
-            <section>
-                <span class="box4"></span>
-                <span class="box5"></span>
-                <span class="box6"></span>
-            </section>
-            <section>
-                <span class="box7"></span>
-                <span class="box8"></span>
-                <span class="box9"></span>
-            </section>
-        </div>
-     </div>
+  <!-- Play-Board Section -->
+  <div class="play-board">
+    <div class="details">
+      <div class="players">
+        <span class="Xturn">X's Turn</span>
+        <span class="Oturn">O's Turn</span>
+      </div>
+    </div>
+    <div class="play-area">
+      <section>
+        <span class="box1" role="button" aria-label="Cell 1"></span>
+        <span class="box2" role="button" aria-label="Cell 2"></span>
+        <span class="box3" role="button" aria-label="Cell 3"></span>
+      </section>
+      <section>
+        <span class="box4" role="button" aria-label="Cell 4"></span>
+        <span class="box5" role="button" aria-label="Cell 5"></span>
+        <span class="box6" role="button" aria-label="Cell 6"></span>
+      </section>
+      <section>
+        <span class="box7" role="button" aria-label="Cell 7"></span>
+        <span class="box8" role="button" aria-label="Cell 8"></span>
+        <span class="box9" role="button" aria-label="Cell 9"></span>
+      </section>
+    </div>
+  </div>
 
-     <!-- Info: Result Section -->
-      <div class="result-bx">
-        <div class="result-txt"></div>
-        <div class="btn">
-            <button>Replay</button>
-          </div>
-        </div>
+  <!-- Result Section -->
+  <div class="result-bx" role="status" aria-live="polite">
+    <div class="result-txt"></div>
+    <div class="btn">
+      <button type="button">Replay</button>
+    </div>
+  </div>
+  <!-- Developer links -->
+  <footer class="dev-links">
+    <p>Built by <a href="https://hamzaamir-portfolio.web.app/" rel="author">Hamza Aamir</a></p>
+    <nav aria-label="Developer links">
+      <a href="https://github.com/x-hamza47" target="_blank" rel="noopener me" aria-label="Hamza Aamir on GitHub"
+        title="GitHub">
+        <i class="fa-brands fa-github" aria-hidden="true"></i>
+      </a>
+      <a href="https://hamzaamir-portfolio.web.app/" target="_blank" rel="noopener author"
+        aria-label="Hamza Aamir's portfolio website" title="Portfolio">
+        <i class="fa-solid fa-code" aria-hidden="true"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/hamza-aamir-dev/" target="_blank" rel="noopener me"
+        aria-label="Hamza Aamir on LinkedIn" title="LinkedIn">
+        <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+      </a>
+    </nav>
+  </footer>
+  <section class="sr-only">
+    <h2>Play Tic Tac Toe online against the computer</h2>
+    <p>
+      This free Tic Tac Toe game runs in your browser with no download or signup.
+      Choose to play as X or O and pick a difficulty: Easy makes random moves,
+      Medium mixes smart and random moves, and Hard never loses.
+    </p>
+    <h2>How to play</h2>
+    <p>
+      Take turns placing your mark on a 3 by 3 grid. The first player to get three
+      marks in a row, column or diagonal wins. If all nine squares are filled with
+      no winner, the game is a draw.
+    </p>
+    <p>Built by <a href="https://hamzaamir-portfolio.web.app/">Hamza Aamir</a>, software engineer.</p>
+  </section>
 
-  </body>
-  <script src="main.js"></script>
+  <noscript>This Tic Tac Toe game needs JavaScript enabled to play.</noscript>
+  <script src="main.js" defer></script>
+</body>
+
 </html>

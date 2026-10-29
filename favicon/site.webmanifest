@@ -1,19 +1,22 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Tic Tac Toe Online",
+    "short_name": "Tic Tac Toe",
+    "description": "Play Tic Tac Toe online for free against the computer with Easy, Medium and Hard modes.",
+    "start_url": "/",
+    "scope": "/",
     "icons": [
         {
-            "src": "/android-chrome-192x192.png",
+            "src": "/favicon/android-chrome-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/android-chrome-512x512.png",
+            "src": "/favicon/android-chrome-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
+    "theme_color": "#8a2be2",
     "background_color": "#ffffff",
     "display": "standalone"
 }

@@ -1,214 +1,217 @@
 const select_bx = document.querySelector(".select-bx"),
   O_btn = select_bx.querySelector(".playerO"),
   X_btn = select_bx.querySelector(".playerX"),
+  levelBtns = select_bx.querySelectorAll(".difficulty button"),
   allBox = document.querySelectorAll("section span"),
   players = document.querySelector(".players"),
   result_bx = document.querySelector(".result-bx"),
   won_txt = result_bx.querySelector(".result-txt"),
-  replay_btn = result_bx.querySelector(".btn"),
+  replay_btn = result_bx.querySelector(".btn button"),
   playBoard = document.querySelector(".play-board");
 
-window.onload = () => {
-  allBox.forEach((box) => {
-    box.onclick = () => {
-      clickedBox(box);
-    };
-  });
+const x_icon = "fa fa-times";
+const o_icon = "far fa-circle";
+const sadEmojies = ["😑", "🙄", "😫", "😕", "😤"];
+const emojies = ["😎", "😉", "😁", "🤑"];
+const lines = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
 
-  X_btn.onclick = () => {
-    playBoard.classList.add("show"); //Show Playboard
-    select_bx.classList.add("hide"); //Hide Select Box on click
-  };
-  O_btn.onclick = () => {
-    select_bx.classList.add("hide"); //Hide Select Box on click
-    playBoard.classList.add("show"); //Show Playboard
-    players.setAttribute("class", "players active player");
-  };
+// Bot "thinking" delay range (ms) per difficulty, short so it never feels slow
+const DELAYS = {
+  easy: [250, 600],
+  medium: [300, 700],
+  hard: [350, 800],
 };
 
-let x_icon = "fa fa-times";
-let o_icon = "far fa-circle";
-let playerSign = "X";
-let runBot = true;
+let difficulty = "medium";
+let humanSign = "X";
+let botSign = "O";
+let current = "X"; // X always starts
+let board = Array(9).fill("");
+let gameOver = false;
 
-// user function
-function clickedBox(ele) {
-  if (players.classList.contains("player")) {
-    playerSign = "O";
-    ele.setAttribute("id", playerSign);
-    ele.innerHTML = `<i class="${o_icon}"></i>`;
-    players.classList.add("active");
-  } else {
-    ele.innerHTML = `<i class="${x_icon}"></i>`;
-    players.classList.add("active");
-    ele.setAttribute("id", playerSign);
+const randomItem = (list) => list[Math.floor(Math.random() * list.length)];
+const randomBetween = (min, max) => min + Math.random() * (max - min);
+
+// "active" class = highlight on O's turn
+function setTurn(sign) {
+  current = sign;
+  players.classList.toggle("active", sign === "O");
+}
+
+function place(index, sign) {
+  board[index] = sign;
+  allBox[index].innerHTML = `<i class="${sign === "X" ? x_icon : o_icon}"></i>`;
+  allBox[index].style.pointerEvents = "none";
+}
+
+// Works on any board array (needed by the AI)
+function getResult(b = board) {
+  for (const [x, y, z] of lines) {
+    if (b[x] && b[x] === b[y] && b[x] === b[z]) return b[x];
   }
-  checkWinner();
-  playBoard.style.pointerEvents = "none";
-  ele.style.pointerEvents = "none";
-  let randomDelay = (Math.random() * 1000 + 200).toFixed();
+  return b.every(Boolean) ? "draw" : null;
+}
+
+function finishIfDone() {
+  const result = getResult();
+  if (!result) return false;
+
+  gameOver = true;
+  if (result === "draw") {
+    won_txt.textContent = `Match has been drawn! ${randomItem(sadEmojies)}`;
+  } else {
+    const emoji = randomItem(result === humanSign ? emojies : sadEmojies);
+    won_txt.innerHTML = `Player <strong>${result} ${emoji}</strong> won the game!`;
+  }
   setTimeout(() => {
-    bot(runBot);
-  }, randomDelay);
+    playBoard.classList.remove("show");
+    result_bx.classList.add("show");
+  }, 700);
+  return true;
 }
 
-// bot Function
+/* ---------------- AI ---------------- */
 
-function bot(runBot) {
-  if (runBot) {
-    const move = bestMove();
-    if (move === -1) return;
+const emptyCells = (b) =>
+  b.map((v, i) => (v ? null : i)).filter((i) => i !== null);
 
-    playerSign = "O";
-    const box = allBox[move];
-    box.innerHTML = `<i class="${o_icon}"></i>`;
-    players.classList.remove("active");
-    box.setAttribute("id", playerSign);
-    box.style.pointerEvents = "none";
-
-    checkWinner();
-    playBoard.style.pointerEvents = "auto";
-    playerSign = "X";
-  }
-}
-
-
-
-// winner function
-
-function getId(idname) {
-  return document.querySelector(".box" + idname).id;
-}
-
-function checkId(val1, val2, val3, sign) {
-  if (getId(val1) == sign && getId(val2) == sign && getId(val3) == sign) {
-    return true;
-  }
-}
-let sadEmojies = ["😑", "🙄", "😫", "😕", "😤"];
-let emojies = ["😎", "😉", "😁", "🤑"];
-
-function getEmoji(emojiType) {
-  return emojiType[Math.floor(Math.random() * emojiType.length)];
-}
-function checkWinner() {
-  let emoji;
-  if (
-    checkId(1, 2, 3, playerSign) ||
-    checkId(4, 5, 6, playerSign) ||
-    checkId(7, 8, 9, playerSign) ||
-    checkId(1, 4, 7, playerSign) ||
-    checkId(2, 5, 8, playerSign) ||
-    checkId(3, 6, 9, playerSign) ||
-    checkId(1, 5, 9, playerSign) ||
-    checkId(3, 5, 7, playerSign)
-  ) {
-    runBot = false;
-    bot(runBot);
-    setTimeout(() => {
-      playBoard.classList.remove("show");
-      result_bx.classList.add("show");
-    }, 700);
-    emoji = getEmoji(emojies);
-    won_txt.innerHTML = `Player <strong>${playerSign} ${emoji}</strong> won the game!`;
-  } else {
-    if (
-      getId(1) != "" &&
-      getId(2) != "" &&
-      getId(3) != "" &&
-      getId(4) != "" &&
-      getId(5) != "" &&
-      getId(6) != "" &&
-      getId(7) != "" &&
-      getId(8) != "" &&
-      getId(9) != ""
-    ) {
-      runBot = false;
-      bot(runBot);
-      setTimeout(() => {
-        playBoard.classList.remove("show");
-        result_bx.classList.add("show");
-      }, 700);
-      emoji = getEmoji(sadEmojies);
-      won_txt.textContent = `Match has been drawn! ${emoji}`;
-    }
-  }
-}
-
-replay_btn.onclick = () => {
-  window.location.reload(); // reload page
-};
-
-
-function getBoardArray() {
-  return Array.from(allBox).map((box) => box.id || "");
-}
-
-function minimax(board, depth, isMaximizing) {
-  const winner = evaluateWinner(board);
-  if (winner === "O") return 10 - depth;
-  if (winner === "X") return depth - 10;
-  if (!board.includes("")) return 0;
-
-  if (isMaximizing) {
-    let bestScore = -Infinity;
-    for (let i = 0; i < 9; i++) {
-      if (board[i] === "") {
-        board[i] = "O";
-        let score = minimax(board, depth + 1, false);
-        board[i] = "";
-        bestScore = Math.max(score, bestScore);
-      }
-    }
-    return bestScore;
-  } else {
-    let bestScore = Infinity;
-    for (let i = 0; i < 9; i++) {
-      if (board[i] === "") {
-        board[i] = "X";
-        let score = minimax(board, depth + 1, true);
-        board[i] = "";
-        bestScore = Math.min(score, bestScore);
-      }
-    }
-    return bestScore;
-  }
-}
-
-function bestMove() {
-  let board = getBoardArray();
-  let bestScore = -Infinity;
-  let move = -1;
-  for (let i = 0; i < 9; i++) {
-    if (board[i] === "") {
-      board[i] = "O";
-      let score = minimax(board, 0, false);
-      board[i] = "";
-      if (score > bestScore) {
-        bestScore = score;
-        move = i;
-      }
-    }
-  }
-  return move;
-}
-
-function evaluateWinner(board) {
-  const winCombos = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let combo of winCombos) {
-    const [a, b, c] = combo;
-    if (board[a] && board[a] === board[b] && board[b] === board[c]) {
-      return board[a];
-    }
+// Find a cell where `sign` would complete a line right now
+function findWinningCell(sign) {
+  for (const i of emptyCells(board)) {
+    board[i] = sign;
+    const won = getResult(board) === sign;
+    board[i] = "";
+    if (won) return i;
   }
   return null;
 }
+
+function randomMove() {
+  return randomItem(emptyCells(board));
+}
+
+// Medium: win if possible, block if needed, else center, else random
+function smartMove() {
+  const win = findWinningCell(botSign);
+  if (win !== null) return win;
+
+  const block = findWinningCell(humanSign);
+  if (block !== null) return block;
+
+  if (!board[4]) return 4;
+  return randomMove();
+}
+
+// Hard: minimax (unbeatable). Score is from the bot's point of view.
+function minimax(b, isBotTurn, depth) {
+  const result = getResult(b);
+  if (result === botSign) return 10 - depth;
+  if (result === humanSign) return depth - 10;
+  if (result === "draw") return 0;
+
+  let best = isBotTurn ? -Infinity : Infinity;
+  for (const i of emptyCells(b)) {
+    b[i] = isBotTurn ? botSign : humanSign;
+    const score = minimax(b, !isBotTurn, depth + 1);
+    b[i] = "";
+    best = isBotTurn ? Math.max(best, score) : Math.min(best, score);
+  }
+  return best;
+}
+
+function perfectMove() {
+  // Empty board: any corner or the center is optimal, so skip the search
+  if (emptyCells(board).length === 9) return randomItem([0, 2, 4, 6, 8]);
+
+  let bestScore = -Infinity;
+  let bestMoves = [];
+  for (const i of emptyCells(board)) {
+    board[i] = botSign;
+    const score = minimax(board, false, 1);
+    board[i] = "";
+    if (score > bestScore) {
+      bestScore = score;
+      bestMoves = [i];
+    } else if (score === bestScore) {
+      bestMoves.push(i);
+    }
+  }
+  return randomItem(bestMoves); // random among equally good moves = variety
+}
+
+function chooseBotMove() {
+  if (difficulty === "easy") return randomMove();
+  if (difficulty === "medium") {
+    // 70% smart, 30% random, so it can be beaten
+    return Math.random() < 0.7 ? smartMove() : randomMove();
+  }
+  return perfectMove();
+}
+
+/* ---------------- Game flow ---------------- */
+
+function humanMove(index) {
+  if (gameOver || board[index] || current !== humanSign) return;
+
+  place(index, humanSign);
+  if (finishIfDone()) return;
+
+  setTurn(botSign);
+  playBoard.style.pointerEvents = "none"; // lock while bot "thinks"
+  const [min, max] = DELAYS[difficulty];
+  setTimeout(botMove, randomBetween(min, max));
+}
+
+function botMove() {
+  if (gameOver) return;
+  if (emptyCells(board).length === 0) return;
+
+  place(chooseBotMove(), botSign);
+  if (finishIfDone()) return;
+
+  setTurn(humanSign);
+  playBoard.style.pointerEvents = "auto";
+}
+
+function startGame(sign) {
+  humanSign = sign;
+  botSign = sign === "X" ? "O" : "X";
+
+  select_bx.classList.add("hide");
+  playBoard.classList.add("show");
+  setTurn("X");
+
+  // If the player chose O, the bot (X) plays first
+  if (humanSign === "O") {
+    playBoard.style.pointerEvents = "none";
+    setTimeout(botMove, 400);
+  }
+}
+
+window.onload = () => {
+  allBox.forEach((box, i) => {
+    box.onclick = () => humanMove(i);
+  });
+
+  levelBtns.forEach((btn) => {
+    btn.onclick = () => {
+      levelBtns.forEach((b) => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      difficulty = btn.dataset.level;
+    };
+  });
+
+  X_btn.onclick = () => startGame("X");
+  O_btn.onclick = () => startGame("O");
+};
+
+replay_btn.onclick = () => window.location.reload();
