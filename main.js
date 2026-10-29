@@ -61,21 +61,31 @@ function getResult(b = board) {
   return b.every(Boolean) ? "draw" : null;
 }
 
+function getWinLine(b = board) {
+  return (
+    lines.find(([x, y, z]) => b[x] && b[x] === b[y] && b[x] === b[z]) || null
+  );
+}
 function finishIfDone() {
   const result = getResult();
   if (!result) return false;
 
   gameOver = true;
+
   if (result === "draw") {
     won_txt.textContent = `Match has been drawn! ${randomItem(sadEmojies)}`;
+    allBox.forEach((box) => box.classList.add("draw"));
   } else {
     const emoji = randomItem(result === humanSign ? emojies : sadEmojies);
     won_txt.innerHTML = `Player <strong>${result} ${emoji}</strong> won the game!`;
+    getWinLine().forEach((i) => allBox[i].classList.add("win"));
   }
+
+  // Wait a bit longer so the animation can be seen before the result box shows
   setTimeout(() => {
     playBoard.classList.remove("show");
     result_bx.classList.add("show");
-  }, 700);
+  }, 1400);
   return true;
 }
 

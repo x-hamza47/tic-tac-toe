@@ -100,6 +100,37 @@
           "author": { "@id": "https://hamzaamir-portfolio.web.app/#person" },
           "isPartOf": { "@id": "https://tic-tac-toe-three-mu-94.vercel.app/#website" },
           "codeRepository": "https://github.com/x-hamza47"
+        },
+                {
+          "@type": "FAQPage",
+          "@id": "https://tic-tac-toe-three-mu-94.vercel.app/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Can I beat the computer at Tic Tac Toe?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes on Easy and Medium. On Hard the computer never loses, so a draw is the best you can do." }
+            },
+            {
+              "@type": "Question",
+              "name": "Who goes first?",
+              "acceptedAnswer": { "@type": "Answer", "text": "X always goes first. If you choose O, the computer plays X and makes the opening move." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is this game free?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is free, needs no signup, and runs directly in your browser." }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the best first move?",
+              "acceptedAnswer": { "@type": "Answer", "text": "A corner or the center. Both give you the most chances to win." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does it work on mobile?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. The game is responsive and works on phones, tablets and desktops." }
+            }
+          ]
         }
       ]
     }
@@ -125,6 +156,7 @@
         <button type="button" class="playerX">Player (X)</button>
         <button type="button" class="playerO">Player (O)</button>
       </div>
+      <p class="how-link"><a href="#how-to-play">How to play ↓</a></p>
     </div>
   </main>
 
@@ -180,21 +212,70 @@
       </a>
     </nav>
   </footer>
-  <section class="sr-only">
-    <h2>Play Tic Tac Toe online against the computer</h2>
-    <p>
-      This free Tic Tac Toe game runs in your browser with no download or signup.
-      Choose to play as X or O and pick a difficulty: Easy makes random moves,
-      Medium mixes smart and random moves, and Hard never loses.
+  <!-- Visible guide: crawlable and useful to real visitors -->
+  <article class="guide" id="how-to-play" aria-labelledby="guide-title">
+    <h2 id="guide-title">How to Play Tic Tac Toe Online</h2>
+    <p class="lead">
+      This free Tic Tac Toe game runs in your browser, with no download or signup.
+      Play against the computer on Easy, Medium or Hard, as X or O, on your phone or desktop.
     </p>
-    <h2>How to play</h2>
-    <p>
-      Take turns placing your mark on a 3 by 3 grid. The first player to get three
-      marks in a row, column or diagonal wins. If all nine squares are filled with
-      no winner, the game is a draw.
+
+    <div class="card">
+      <h3>The rules</h3>
+      <ol>
+        <li>Pick a difficulty, then choose to play as X or O.</li>
+        <li>Players take turns placing a mark in an empty square of the 3 by 3 grid. X always goes first.</li>
+        <li>Get three of your marks in a row, column or diagonal to win.</li>
+        <li>If all nine squares are filled and nobody has three in a row, the game is a draw.</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>Difficulty levels</h3>
+      <ul>
+        <li><strong>Easy:</strong> the computer plays random moves. Good for beginners and kids.</li>
+        <li><strong>Medium:</strong> the computer usually wins or blocks when it can, but sometimes makes mistakes. You
+          can beat it with a fork, which is two winning threats at once.</li>
+        <li><strong>Hard:</strong> the computer never loses. The best result you can get is a draw.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Tic Tac Toe strategy tips</h3>
+      <ul>
+        <li>Start in a corner or the center, since these squares belong to the most winning lines.</li>
+        <li>Always check whether your opponent has two in a row, and block the third square.</li>
+        <li>Try to create a fork: a move that gives you two ways to win at once.</li>
+        <li>Against a perfect opponent, correct play from both sides always ends in a draw.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Frequently asked questions</h3>
+
+      <h4>Can I beat the computer at Tic Tac Toe?</h4>
+      <p>Yes on Easy and Medium. On Hard the computer never loses, so a draw is the best you can do.</p>
+
+      <h4>Who goes first?</h4>
+      <p>X always goes first. If you choose O, the computer plays X and makes the opening move.</p>
+
+      <h4>Is this game free?</h4>
+      <p>Yes. It is free, needs no signup, and runs directly in your browser.</p>
+
+      <h4>What is the best first move?</h4>
+      <p>A corner or the center. Both give you the most chances to win.</p>
+
+      <h4>Does it work on mobile?</h4>
+      <p>Yes. The game is responsive and works on phones, tablets and desktops.</p>
+    </div>
+
+    <p class="credit">
+      Designed and built by <a href="https://hamzaamir-portfolio.web.app/" rel="author">Hamza Aamir</a>,
+      a software engineer. See more projects on the
+      <a href="https://hamzaamir-portfolio.web.app/">portfolio</a> or
+      <a href="https://github.com/x-hamza47" rel="noopener me">GitHub</a>.
     </p>
-    <p>Built by <a href="https://hamzaamir-portfolio.web.app/">Hamza Aamir</a>, software engineer.</p>
-  </section>
+  </article>
 
   <noscript>This Tic Tac Toe game needs JavaScript enabled to play.</noscript>
   <script src="main.js" defer></script>
